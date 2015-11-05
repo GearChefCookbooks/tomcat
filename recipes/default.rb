@@ -95,7 +95,9 @@ if node['tomcat']['run_base_instance']
     shutdown_port node['tomcat']['shutdown_port']
   end
   instance = node['tomcat']['base_instance']
-  create_service(instance)
+  if node['run_services']
+    create_service(instance)
+  end
 end
 
 node['tomcat']['instances'].each do |name, attrs|
@@ -142,7 +144,9 @@ node['tomcat']['instances'].each do |name, attrs|
   end
 
   instance = "#{node['tomcat']['base_instance']}-#{name}"
-  create_service(instance)
+  if node['run_services']
+    create_service(instance)
+  end
 end
 
 execute "wait for #{instance}" do
