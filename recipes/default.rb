@@ -95,7 +95,7 @@ if node['tomcat']['run_base_instance']
     shutdown_port node['tomcat']['shutdown_port']
   end
   instance = node['tomcat']['base_instance']
-  if node['run_services']
+  if not node['dockercontainer']
     create_service(instance)
   end
 end
@@ -144,7 +144,7 @@ node['tomcat']['instances'].each do |name, attrs|
   end
 
   instance = "#{node['tomcat']['base_instance']}-#{name}"
-  if node['run_services']
+  if not node['dockercontainer']
     create_service(instance)
   end
 end
